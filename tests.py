@@ -1,5 +1,6 @@
 import pytest
 import exfoliate
+import concurrent.futures
 
 
 class TestClient:
@@ -14,7 +15,7 @@ class TestClient:
     
     def test_methods(self):
         client = exfoliate.Client()
-        for method_name in ('GET', 'PUT', 'POST', 'DELETE'):
+        for method_name in ('GET', 'PUT', 'POST', 'DELETE', ):
             method = getattr(client, method_name.lower())
             future = method('https://httpbin.org/anything')
             response = future.response()
@@ -68,8 +69,8 @@ class TestFutures:
     
     def test_len(self):
         futures = exfoliate.Futures()
-        future_1 = exfoliate.concurrent.futures.Future()
-        future_2 = exfoliate.concurrent.futures.Future()
+        future_1 = concurrent.futures.Future()
+        future_2 = concurrent.futures.Future()
         futures.add(future_1)
         assert len(futures) == 1
         futures.add(future_1)
@@ -79,9 +80,9 @@ class TestFutures:
     
     def test_iter(self):
         futures = exfoliate.Futures()
-        future_1 = exfoliate.concurrent.futures.Future()
-        future_2 = exfoliate.concurrent.futures.Future()
-        future_3 = exfoliate.concurrent.futures.Future()
+        future_1 = concurrent.futures.Future()
+        future_2 = concurrent.futures.Future()
+        future_3 = concurrent.futures.Future()
         future_1.set_result(None)
         futures.add(future_1)
         futures.add(future_2)
@@ -100,8 +101,8 @@ class TestFutures:
     
     def test_remove_and_contains(self):
         futures = exfoliate.Futures()
-        future_1 = exfoliate.concurrent.futures.Future()
-        future_2 = exfoliate.concurrent.futures.Future()
+        future_1 = concurrent.futures.Future()
+        future_2 = concurrent.futures.Future()
         future_2.set_result(1)
         futures.add(future_1)
         futures.add(future_2)

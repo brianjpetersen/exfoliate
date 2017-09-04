@@ -1,1 +1,6 @@
-include README.md LICENSE VERSION DESCRIPTION.rst benchmark.py tests.py
+include README.md
+include LICENSE
+include exfoliate/VERSION.txt
+include DESCRIPTION.rst
+include benchmark.py
+include tests.py

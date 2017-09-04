@@ -1,10 +1,11 @@
 import os
 import sys
 import setuptools
+import shutil
 
 
 __where__ = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(__where__, 'VERSION'), 'rb') as f:
+with open(os.path.join(__where__, 'exfoliate', 'VERSION.txt'), 'rb') as f:
     __version__ = f.read().decode('ascii').strip()
 
 
@@ -41,10 +42,10 @@ class PublishCommand(setuptools.Command):
     def run(self):
         try:
             print('removing previous builds...')
-            shutil.rmtree(os.path.join(here, 'dist'))
+            shutil.rmtree(os.path.join(__where__, 'dist'))
         except FileNotFoundError:
             pass
-        print('building Source and Wheel (universal) distribution...')
+        print('building source and wheel (universal) distribution...')
         os.system(f'{sys.executable} setup.py sdist bdist_wheel --universal')
         print('uploading the package to PyPi via Twine...')
         os.system('twine upload dist/*')
@@ -73,7 +74,8 @@ setuptools.setup(
     author='Brian J Petersen',
     author_email='brianjpetersen@gmail.com',
     url='https://github.com/brianjpetersen/exfoliate',
-    py_modules=['exfoliate', ],
+    #py_modules=['exfoliate', ],
+    packages=setuptools.find_packages(),
     install_requires=['aiohttp>=2.2.5', ],
     tests_require=['pytest', 'requests', ],
     include_package_data=True,

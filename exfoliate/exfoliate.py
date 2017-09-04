@@ -3,7 +3,6 @@
 Enjoy the benefits of a scalable, asynchronous HTTP client without worrying about coroutines or 
 event loops.  Exfoliate is the gentler, more Pythonic way to scrape the web.
 """
-import os
 import asyncio
 import aiohttp
 import threading
@@ -14,11 +13,6 @@ import json
 import collections
 import time
 import chardet
-
-
-__where__ = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(__where__, 'VERSION'), 'rb') as f:
-    __version__ = f.read().decode('ascii').strip()
 
 
 # expose relevant aiohttp classes here
