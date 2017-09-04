@@ -21,6 +21,8 @@ Check it out:
 ...     'https://github.com/brianjpetersen/exfoliate',
 ... )
 >>> client = exfoliate.Client()
+>>> for url in urls:
+...     client.get(url)
 >>> for future in client.futures:
 ...     response = future.response()
 ...     content_length = len(response.content)
