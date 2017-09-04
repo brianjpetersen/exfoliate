@@ -10,7 +10,7 @@ with open(os.path.join(__where__, 'VERSION'), 'rb') as f:
 
 # would prefer to just use markdown, but not compatible with setuptools; see the following Github
 # issue for more information: https://github.com/pypa/packaging-problems/issues/46
-with open(os.path.join(__where__, '_DESCRIPTION.rst'), 'rb') as f:
+with open(os.path.join(__where__, 'DESCRIPTION.rst'), 'rb') as f:
     long_description = f.read().decode('utf-8').strip()
 
 

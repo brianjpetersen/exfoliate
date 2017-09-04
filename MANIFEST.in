@@ -1,1 +1,1 @@
-include README.md LICENSE VERSION _DESCRIPTION.rst benchmark.py tests.py
+include README.md LICENSE VERSION DESCRIPTION.rst benchmark.py tests.py
