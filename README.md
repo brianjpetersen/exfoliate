@@ -56,7 +56,7 @@ Compare to similar code written with aiohttp:
 
 # Motivation
 
-What Python developer doesn't love requests?  Its beautiful API has saved an untold number of keystrokes and has rendered thumbing through documentation to accomplish something that should be **simple** a relic of the past.
+What Python developer doesn't love [requests](https://github.com/requests/requests)?  Its beautiful API has saved an untold number of keystrokes and has rendered thumbing through documentation to accomplish something that should be **simple** a relic of the past.
 
 Unfortunately, for all its many strengths, requests is synchronous.  This means that if you have a lot of requests to make, you have to make them sequentially instead of concurrently.  This can be **slow**.
 
