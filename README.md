@@ -1,5 +1,5 @@
 # exfoliate
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Python: v3.6](https://img.shields.io/pypi/pyversions/exfoliate.svg)](https://pypi.python.org/pypi/exfoliate)
 
 Exfoliate is the asynchronous HTTP client for developers who prefer synchronous Python.  Enjoy the benefits of a scalable, asynchronous HTTP client without worrying about coroutines or event loops.
 
