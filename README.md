@@ -7,7 +7,7 @@ Exfoliate is the gentler, more Pythonic way to scrape the web.
 
 # Example
 
-The exfoliate client makes requests with the same call signature of methods on ```aiohttp.ClientSession``` and returns an instance that quacks like a ```concurrent.future.Future```.  The future instance resolves to an HTTP ```Response``` instance, which attempts to mimic the ```requests.Response``` class, or an exception if the request failed.
+The exfoliate client makes requests with the same call signature of methods on ```aiohttp.ClientSession``` and returns an ```concurrent.futures.Future``` instance.  The future instance resolves to an HTTP ```Response``` instance, which attempts to mimic the ```requests.Response``` class, or an exception if the request failed.  If something unexpected happens, you can retry the request with ```future.repeat()```.
 
 Check it out:
 
@@ -20,7 +20,7 @@ Check it out:
 ...     'https://github.com/kennethreitz/grequests',
 ...     'https://github.com/brianjpetersen/exfoliate',
 ... )
->>> client = extfoliate.Client()
+>>> client = exfoliate.Client()
 >>> for future in client.futures:
 ...     response = future.response()
 ...     content_length = len(response.content)
