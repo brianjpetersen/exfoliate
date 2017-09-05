@@ -77,6 +77,10 @@ Under the hood, exfoliate is a thin abstraction over the comprehensive aiohttp c
 
 Due to the fact that it is also running a synchronous thread, exfoliate suffers slightly degraded performance relative to pure aiohttp.  The [simple benchmark](./benchmark.py) included here attempts to quantify this degradation, which is generally found to be less than 10% in terms of runtime for making many of requests.  Of course, as with any benchmark, your mileage may vary, and if performance is critical, you should benchmark exfoliate using a workload representative of yours to assess its suitability for your needs.  In short: caveat emptor!
 
+# Advanced Usage
+
+Exfoliate was designed with web scraping in mind.  As a more comprehensive and realistic example of exfoliate in action, consider [this script](./example.py), which scrapes Reddit's r/Python/ for comments.  (Yes, Reddit has an API, but Reddit has generous robots.txt permissions and makes for a good demonstration).
+
 # Installing, Testing, and Benchmarking
 
 To install exfoliate, visit your local neighborhood [cheeseshop](https://wiki.python.org/moin/CheeseShop):

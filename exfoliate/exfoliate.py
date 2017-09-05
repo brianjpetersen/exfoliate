@@ -81,6 +81,7 @@ class Futures(collections.abc.Collection):
             if future.done():
                 self._pending_set.remove(future)
                 self._pending_deque.pop()
+                self._complete_set.add(future)
                 yield future
             else:
                 self._pending_deque.rotate(1)
@@ -339,6 +340,6 @@ class Client:
             args = request['*args']
             kwargs = request['**kwargs']
             return method(*args, **kwargs)
-        future.repeat = types.MethodType(repeat, future)
+        future.repeat = future.retry = types.MethodType(repeat, future)
         self.futures.add(future)
         return future
