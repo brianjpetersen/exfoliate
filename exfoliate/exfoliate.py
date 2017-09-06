@@ -33,18 +33,18 @@ class Futures(collections.abc.Collection):
     The latter of these differences is important to make exfoliate easier to use during web
     scraping.
     
-    Note that this class is currently not thread-safe due to the duplicated data in _pending_set
-    and _pending_deque, which considered in combination are not updated atomically resulting in 
-    potential race conditions.
-    
     """
+    
+    LOCK = threading.RLock()
+    
     def __init__(self, futures=None):
         self._complete_set = set()
         self._pending_set = set()
         self._pending_deque = collections.deque()
         if futures is not None:
-            for future in futures:
-                self.add(future)
+            with self.LOCK:
+                for future in futures:
+                    self.add(future)
     
     @property
     def completed(self):
@@ -58,20 +58,23 @@ class Futures(collections.abc.Collection):
         if future.done():
             self._complete_set.add(future)
         elif future not in self._pending_set:
-            self._pending_set.add(future)
-            self._pending_deque.append(future)
+            with self.LOCK:
+                self._pending_set.add(future)
+                self._pending_deque.append(future)
     
     def remove(self, future):
         if future in self._pending_set:
-            self._pending_set.remove(future)
-            self._pending_deque.remove(future)
+            with self.LOCK:
+                self._pending_set.remove(future)
+                self._pending_deque.remove(future)
         elif future in self._complete_set:
             self._complete_set.remove(future)
         else:
             raise KeyError(f'Futures object does not contain {future}')
     
     def __contains__(self, future):
-        return (future in self._complete_set) or (future in self._pending_deque)
+        with self.LOCK:
+            return (future in self._complete_set) or (future in self._pending_deque)
         
     def __iter__(self):
         for future in self._complete_set:
@@ -79,16 +82,18 @@ class Futures(collections.abc.Collection):
         while len(self._pending_deque):
             future = self._pending_deque[-1]
             if future.done():
-                self._pending_set.remove(future)
-                self._pending_deque.pop()
-                self._complete_set.add(future)
+                with self.LOCK:
+                    self._pending_set.remove(future)
+                    self._pending_deque.pop()
+                    self._complete_set.add(future)
                 yield future
             else:
                 self._pending_deque.rotate(1)
                 time.sleep(0.1)
     
     def __len__(self):
-        return len(self._complete_set) + len(self._pending_set)
+        with self.LOCK:
+            return len(self._complete_set) + len(self._pending_set)
     
     def __repr__(self):
         return 'Futures(({}))'.format(
